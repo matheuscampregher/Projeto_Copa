@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Álbum Panini · Copa do Mundo 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 <style>
@@ -259,11 +259,103 @@ img.ir{filter:none}
 </head>
 <body>
 
+
+
+
+
+  
+
+
+
+
+
+
+
+
 <!-- INTRO / VINHETA -->
 <div id="intro" role="dialog" aria-label="Vinheta de abertura">
-  <!-- SEM muted — áudio toca normalmente -->
+  <video id="intro-vid" playsinline preload="auto" aria-hidden="true">
+    <source src="Vinheta_Copa.mp4" type="video/mp4">
+  </video>
+  <div class="intro-ov" aria-hidden="true"></div>
+
+  <!-- TELA DE INÍCIO (clique para liberar áudio) -->
+  <div id="intro-start" class="intro-start">
+    <div class="intro-logo">
+      <div class="pp">PANINI</div>
+      <h1>COPA DO<br>MUNDO <em>2026</em></h1>
+      <p>Álbum Oficial de Figurinhas · 16 Estádios</p>
+    </div>
+    <button id="btn-start" class="intro-play" aria-label="Iniciar vinheta">
+      <i class="fa-solid fa-play"></i> INICIAR
+    </button>
+  </div>
+
+  <button class="intro-skip" onclick="skipIntro()" aria-label="Pular vinheta">
+    Pular <i class="fa-solid fa-forward"></i>
+  </button>
+  <div class="intro-bar"><div class="intro-bar-fill" id="ibar"></div></div>
+</div>
+
+<script>
+  const introVid   = document.getElementById('intro-vid');
+  const introStart = document.getElementById('intro-start');
+  const btnStart   = document.getElementById('btn-start');
+
+  // Clique libera o áudio e toca a vinheta
+  btnStart.addEventListener('click', () => {
+    introStart.style.display = 'none';   // some a tela de início
+    introVid.muted = false;              // libera o áudio
+    introVid.play().catch(err => {
+      console.warn('Play falhou:', err);
+    });
+  });
+
+  // Quando a vinheta terminar, avança o site
+  introVid.addEventListener('ended', () => {
+    if (typeof skipIntro === 'function') skipIntro();
+  });
+</script>
+
+<style>.intro-start {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: rgba(0,0,0,0.55);
+  z-index: 3;
+  cursor: pointer;
+}
+
+.intro-play {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .3s ease;
+  letter-spacing: 2px;
+}
+.intro-play:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.05);
+}</style>
+
+
+
+<!--
+!! INTRO / VINHETA !!
+<div id="intro" role="dialog" aria-label="Vinheta de abertura">
+  !! SEM muted — áudio toca normalmente !!
   <video id="intro-vid" autoplay playsinline preload="auto" aria-hidden="true">
-    <source src="copa2026_enhanced.mp4" type="video/mp4">
+    <source src="Vinheta_Copa.mp4" type="video/mp4">
   </video>
   <div class="intro-ov" aria-hidden="true"></div>
   <div class="intro-logo">
@@ -276,6 +368,15 @@ img.ir{filter:none}
   </button>
   <div class="intro-bar"><div class="intro-bar-fill" id="ibar"></div></div>
 </div>
+-->
+
+
+
+
+
+
+
+
 
 <!-- HEADER -->
 <header class="album-cover" role="banner">
